@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>StudyTime – Timetable Generator</title>
+    <title>StudyWise26</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" type="image/x-icon" href="STUDY WISE.ico" />
     <link
@@ -12,9 +12,17 @@
     />
   </head>
   <body>
+    <audio id="background-audio" controls autoplay loop preload="auto">
+      <source
+        src="https://www.bensound.com/bensound-music/bensound-slowmotion.mp3"
+        type="audio/mpeg"
+      />
+      Your browser does not support the audio element.
+    </audio>
+
     <div class="theme-picker no-print" id="theme-picker">
       <button class="theme-toggle" id="theme-toggle" title="Toggle dark/light">
-        <span id="theme-icon">☀️</span>
+        <span id="theme-icon">⏾</span>
       </button>
       <div class="theme-swatches">
         <button
@@ -89,8 +97,11 @@
 
     <div class="app">
       <header class="header">
+        <img src="STUDY WISE(removedbg).ico" width="300" />
         <h1 class="logo">StudyWise</h1>
-        <p class="tagline">Your smart, friendly study companion.</p>
+        <p class="tagline">
+          Your smart, friendly study companion developed by people like u.
+        </p>
 
         <div class="steps">
           <div class="step active" id="step-dot-1">
@@ -118,7 +129,7 @@
         <section class="card" id="section-1">
           <div class="card-header">
             <h2>What are you studying?</h2>
-            <p>Upload a syllabus PDF or type your subjects below.</p>
+            <p>Upload a PDF Timetable or type your subjects below.</p>
           </div>
 
           <div class="card-body">
@@ -321,9 +332,8 @@
         in DHS(SS1 topaz)
       </footer>
       <footer class="footer no-print">
-        Team Leader: Isabella Igo 
-        Developer: Iwaha OgheneKaro
-        Product Designer: Isabella Igo
+        Team Leader: Isabella Igo Developer: Iwaha OgheneKaro Product Designer:
+        Isabella Igo
       </footer>
     </div>
 
