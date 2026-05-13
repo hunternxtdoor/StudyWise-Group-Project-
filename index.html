@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyTime – Timetable Generator</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ── Theme Picker ── -->
+  <div class="theme-picker no-print" id="theme-picker">
+    <button class="theme-toggle" id="theme-toggle" title="Toggle dark/light">
+      <span id="theme-icon">☀️</span>
+    </button>
+    <div class="theme-swatches">
+      <button class="swatch" data-theme="light"  title="Light"  style="background:#f0f4f8;border:2px solid #3d9e8c"></button>
+      <button class="swatch" data-theme="dark"   title="Dark"   style="background:#0f172a"></button>
+      <button class="swatch" data-theme="ocean"  title="Ocean"  style="background:#0c4a6e"></button>
+      <button class="swatch" data-theme="forest" title="Forest" style="background:#14532d"></button>
+      <button class="swatch" data-theme="sunset" title="Sunset" style="background:#7c2d12"></button>
+    </div>
+  </div>
+
+  <!-- ── Saved Timetables Modal ── -->
+  <div class="modal-overlay hidden" id="saves-overlay">
+    <div class="modal" id="saves-modal">
+      <div class="modal-header">
+        <h3>Saved Timetables</h3>
+        <button class="modal-close" id="saves-close" title="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="saves-list">
+        <!-- rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Save Name Dialog (inline popover on Step 3) ── -->
+  <div class="save-popover hidden" id="save-popover">
+    <p class="save-popover-label">Name this timetable</p>
+    <div class="save-popover-row">
+      <input type="text" id="save-name-input" class="subject-input" placeholder="e.g. Week 1 Plan" maxlength="40" />
+      <button class="btn btn-primary" id="save-confirm-btn">Save</button>
+      <button class="btn btn-ghost" id="save-cancel-btn">Cancel</button>
+    </div>
+  </div>
+
+  <div class="app">
+
+    <!-- ── HEADER ── -->
+    <header class="header">
+      <h1 class="logo">StudyTime</h1>
+      <p class="tagline">Your smart, friendly study companion.</p>
+
+      <div class="steps">
+        <div class="step active" id="step-dot-1">
+          <div class="step-circle">1</div>
+          <span>Subjects</span>
+        </div>
+        <div class="step-line"><div class="step-line-fill" id="line-1"></div></div>
+        <div class="step inactive" id="step-dot-2">
+          <div class="step-circle">2</div>
+          <span>Difficulty</span>
+        </div>
+        <div class="step-line"><div class="step-line-fill" id="line-2"></div></div>
+        <div class="step inactive" id="step-dot-3">
+          <div class="step-circle">3</div>
+          <span>Timetable</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── MAIN ── -->
+    <main class="main">
+
+      <!-- STEP 1: Add Subjects -->
+      <section class="card" id="section-1">
+        <div class="card-header">
+          <h2>What are you studying?</h2>
+          <p>Upload a syllabus PDF or type your subjects below.</p>
+        </div>
+
+        <div class="card-body">
+          <!-- Saved timetables shortcut -->
+          <button class="btn btn-outline btn-full saved-shortcut no-print" id="open-saves-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Load a Saved Timetable
+            <span class="saves-badge hidden" id="saves-badge">0</span>
+          </button>
+
+          <div class="upload-zone" id="upload-zone">
+            <input type="file" id="pdf-input" accept=".pdf,application/pdf" hidden />
+            <div class="upload-icon" id="upload-icon">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+            </div>
+            <p class="upload-title" id="upload-title">Click or drag a PDF here</p>
+            <p class="upload-sub">Subjects are extracted automatically — no server needed</p>
+          </div>
+
+          <div class="divider"><span>OR MANUALLY ENTER</span></div>
+
+          <ul class="subject-list" id="subject-list"></ul>
+
+          <button class="btn btn-outline btn-full" id="add-subject-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Subject
+          </button>
+        </div>
+
+        <div class="card-footer">
+          <button class="btn btn-primary" id="next-to-2">
+            Continue
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- STEP 2: Difficulty -->
+      <section class="card hidden" id="section-2">
+        <div class="card-header">
+          <h2>Assess the difficulty</h2>
+          <p>Tag each subject so we can balance your schedule smartly.</p>
+        </div>
+
+        <div class="card-body">
+          <ul class="difficulty-list" id="difficulty-list"></ul>
+        </div>
+
+        <div class="card-footer between">
+          <button class="btn btn-ghost" id="back-to-1">← Back</button>
+          <button class="btn btn-primary" id="generate-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Generate Timetable
+          </button>
+        </div>
+      </section>
+
+      <!-- STEP 3: Timetable -->
+      <section class="hidden full-width" id="section-3">
+        <div class="tt-toolbar no-print">
+          <div>
+            <h2>Your Weekly Plan</h2>
+            <p class="muted">Study sessions: 6 PM – 9 PM &nbsp;|&nbsp; Saturday is your light day</p>
+          </div>
+          <div class="toolbar-btns">
+            <button class="btn btn-outline" id="save-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Save
+            </button>
+            <button class="btn btn-outline" id="regen-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Regenerate
+            </button>
+            <button class="btn btn-primary" id="download-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download PDF
+            </button>
+          </div>
+        </div>
+
+        <div class="legend no-print">
+          <span class="legend-dot easy"></span><span>Easy</span>
+          <span class="legend-dot medium"></span><span>Medium</span>
+          <span class="legend-dot hard"></span><span>Hard</span>
+        </div>
+
+        <div class="table-wrap">
+          <table class="timetable" id="timetable"></table>
+        </div>
+
+        <div class="center-row no-print" style="margin-top:2rem">
+          <button class="btn btn-ghost" id="start-over-btn">Start Over</button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ── FOOTER ── -->
+    <footer class="footer no-print">
+      This project was developed by a group of students as part of an assigned academic task.
+    </footer>
+
+  </div>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>
