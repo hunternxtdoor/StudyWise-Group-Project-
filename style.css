@@ -996,4 +996,63 @@ body {
     background: #fee2e2 !important;
     color: #dc2626 !important;
   }
+   .contact-form {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 1.2rem;
+    /* Uses the theme's input background or a transparent fallback */
+    background: var(--input-bg, rgba(0, 0, 0, 0.05)); 
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+/* Placeholder color adjustments for readability */
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: var(--text-color);
+    opacity: 0.6;
+}
+
+/* Focus state: Highlights the input using the theme's Accent Color */
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    background: var(--card-bg);
+    box-shadow: 0 0 0 4px rgba(var(--accent-color-rgb, 108, 92, 231), 0.1);
+}
+
+/* Submit Button: Matches the main theme action color */
+.contact-form .btn-primary {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.contact-form .btn-primary:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.contact-form .btn-primary:active {
+    transform: translateY(0);
+}
 }
