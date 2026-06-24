@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudyWise</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="STUDY WISE.ico" />
 </head>
@@ -93,29 +97,33 @@
             <ul id="note-list" class="item-list"></ul>
         </section>
     </main>
-<footer class="footer no-print">
-        This project(Studywise) was developed by us, for our Digital Tech Class
-        in DHS(SS1 topaz)
-      </footer>
-      <footer class="footer no-print">
+
+    <footer class="footer no-print">
+        This project (Studywise) was developed by us, for our Digital Tech Class in DHS (SS1 topaz)
+    </footer>
+    <footer class="footer no-print">
         <p class="footer-credits">
-          Team Leader &amp; Product Designer: Isabella Igo &nbsp;·&nbsp;
-          Developer: Iwaha OgheneKaro · Research And Testing: Taiwo Tioluwani · Soyin
-          Orawusi · Isaac Unuebho · Olaoluwa Ogunbambo · Adunoluwa Ayodele
+            Team Leader &amp; Product Designer: Isabella Igo &nbsp;·&nbsp;
+            Developer: Iwaha OgheneKaro · Research And Testing: Taiwo Tioluwani · Soyin
+            Orawusi · Isaac Unuebho · Olaoluwa Ogunbambo · Adunoluwa Ayodele
         </p>
-      </footer>
-      <form action="https://formspree.io/f/mnjwkqgw" method="POST">
-        <label>
-          Your email:
-          <input type="email" name="email" />
-        </label>
-        <label>
-          Your message:
-          <textarea name="message"></textarea>
-        </label>
-        <button type="submit">Send</button>
-      </form>
+    </footer>
+    
+    <div style="max-width: 1200px; margin: 2rem auto; padding: 0 1rem;">
+        <form action="https://formspree.io/f/mnjwkqgw" method="POST" class="card">
+            <h2 style="margin-bottom: 1rem;">Send Feedback</h2>
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">
+                Your email:
+                <input type="email" name="email" />
+            </label>
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">
+                Your message:
+                <textarea name="message" rows="3"></textarea>
+            </label>
+            <button type="submit" class="btn btn-primary">Send</button>
+        </form>
     </div>
+    
     <script src="app.js"></script>
 </body>
 </html>
